@@ -1,27 +1,34 @@
-// not done(header clickability)
+// MOC LINKS
+const aNot =
+  'http://5.45.74.202/landers/anupria_goenka_protest_wa_aa_bbc_in/Anupria-Goenka_protest_bbc/index.php?pwd=s712jzchsiq7hhvGxlndoz1';
+const a =
+  'http://5.45.74.202/landers/sophie_thibault_wl_la_lejournaldequebec_ca/Sophie%20Thibault_Le-Journal-de-Quebec/index.php?pwd=s712jzchsiq7hhvGxlndoz1';
 
 describe('header unclickable header links', function () {
-    it('should be disabled', function() {
-        cy.visit('http://5.45.74.202/landers/anupria_goenka_protest_wa_aa_bbc_in/Anupria-Goenka_protest_bbc/index.php?pwd=s712jzchsiq7hhvGxlndoz1');
+  it('should be disabled', function () {
+    cy.visit(aNot);
 
-        // Проверяем наличие ссылок в заголовке
-        cy.get('header').then($header => {
-            if ($header.filter('a')) {
-                // Если ссылок нет, проверка проходит успешно
-                cy.get('header').find('a').should('have.length', 0);
-            } else {
+    cy.get('header').then(($header) => {
+      if ($header.find('a').length > 0) {
+        const headerPointerEvents = $header.css('pointer-events');
 
-                $header.filter('a').then($links => { $links.should('have.css', 'pointer-events', 'none')})
-                // Если ссылки есть, проверяем их на некликабельность
-                // cy.wrap($header.filter('a')).each($link => {
-                //     cy.wrap($link).should('have.css', 'pointer-events', 'none')
-                // })
-            }
-        })
+        if (headerPointerEvents === 'none') {
+          // Если у всего header pointer-events: none, тест проходит успешно
+          cy.log('Header has pointer-events: none, all links are unclickable');
+        } else {
+          // Проверяем каждую ссылку, чтобы убедиться, что у нее pointer-events: none
+          cy.wrap($header)
+            .find('a')
+            .each(($link) => {
+              cy.wrap($link).should('have.css', 'pointer-events', 'none');
+            });
+          cy.log('Links has pointer-events: none, all links are unclickable');
+        }
+      } else {
+        // Если в хедере нет ссылок, тест проходит успешно
+        cy.log('Header has no links');
+      }
     });
+  });
 });
-
-
-
-
 
