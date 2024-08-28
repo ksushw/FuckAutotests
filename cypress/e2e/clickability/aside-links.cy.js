@@ -15,7 +15,7 @@ const mocLinks = [
 
 describe('aside unclickable links', function () {
   it('should be disabled', function () {
-    cy.visit(link);
+    cy.visit(mocLinks[1]);
 
     cy.get('body').then(($body) => {
       if ($body.find('aside').length > 0) {
