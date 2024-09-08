@@ -19,7 +19,7 @@ const a =
     it('Должен подтвердить наличие хотя бы одного элемента с указанными стилями', () => {
       cy.visit(mocLinks[0]);
       let styleFound = false;
-      // Функция для проверки наличия и значения стиля
+
       const checkStyles = (selector) => {
         cy.get('body').find(selector).then(($elements) => {
             if ($elements.length > 0) {
@@ -50,8 +50,7 @@ const a =
       checkStyles('.check');
   
       checkStyles('.un-steps__check');
-      
-      // Убеждаемся, что хотя бы один элемент с указанными стилями найден
+
       cy.then(() => {
         expect(styleFound).to.be.true;
       });
@@ -76,8 +75,8 @@ const a =
                         if(cy.wrap($el).should('have.css', 'pointer-events', 'none')
                             .and('have.css', 'user-select', 'none')
                             .and('have.css', '-webkit-user-select', 'none')
-                            // .and('have.css', '-ms-user-select', 'none')
-                            // .and('have.css', '-moz-user-select', 'none')
+                            .and('have.css', '-ms-user-select', 'none')
+                            .and('have.css', '-moz-user-select', 'none')
                         ) {
                                 styleFound = true;
                             }
