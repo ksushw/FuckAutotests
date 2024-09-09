@@ -36,16 +36,6 @@ const removePointerEventsNone = () => {
         }
     });
 };
-const removeLinksWithText = (texts) => {
-    texts.forEach((text) => {
-        cy.contains('a', text, { matchCase: false }).then(($el) => {
-            if ($el.length > 0) {
-                console.log(`Удаление ссылки с текстом: ${text}`);
-                cy.wrap($el).invoke('remove');
-            }
-        });
-    });
-};
 
 describe('Проверка стилей ссылок на разных лендингах', () => {
     it('Все ссылки должны быть либо синими по умолчанию и красными при наведении, либо наоборот', () => {
