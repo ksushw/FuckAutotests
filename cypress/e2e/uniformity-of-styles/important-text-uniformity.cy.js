@@ -14,7 +14,7 @@ describe('Тест на элементы с только левым бордер
     cy.visit(targetUrl);
 
     const blueHex = '#007fff';
-    const redHex = '#e32402';
+    const redHex = '#e11229';
 
     // Ищем элементы, у которых только левый бордер
     cy.get('*')
@@ -45,7 +45,10 @@ describe('Тест на элементы с только левым бордер
           const borderLeftColor = Cypress.$($el).css('border-left-color');
           const isCorrectColor =
             rgbaToHex(borderLeftColor) === blueHex || rgbaToHex(borderLeftColor) === redHex;
-          expect(isCorrectColor, 'Цвет левого бордера должен быть #007FFF или #e11229').to.be.true;
+          expect(
+            isCorrectColor,
+            `Цвет левого бордера должен быть #007FFF или #e11229 (текущий цвет ${borderLeftColor})`
+          ).to.be.true;
 
           // Check if the inner text is italic
           const fontStyle = Cypress.$($el).css('font-style');
