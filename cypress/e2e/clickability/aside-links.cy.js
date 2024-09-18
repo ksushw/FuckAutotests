@@ -3,7 +3,7 @@ const targetUrl = Cypress.env('targetUrl');
 
 describe('aside unclickable links', function () {
   it('should be disabled', function () {
-    cy.visit(targetUrl[1]);
+    cy.visit(targetUrl);
 
     cy.get('body').then(($body) => {
       if ($body.find('aside').length > 0) {

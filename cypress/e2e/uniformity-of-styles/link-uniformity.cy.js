@@ -23,7 +23,7 @@ const removePointerEventsNone = () => {
 
 describe('Проверка стилей ссылок на разных лендингах', () => {
   it('Все ссылки должны быть либо синими по умолчанию и красными при наведении, либо наоборот', () => {
-    cy.visit(targetUrl[5]); // Замените на нужный URL
+    cy.visit(targetUrl); // Замените на нужный URL
 
     cy.get('body').then(($body) => {
       if ($body.find('aside').length > 0) {

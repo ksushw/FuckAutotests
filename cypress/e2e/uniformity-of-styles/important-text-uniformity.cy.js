@@ -11,7 +11,7 @@ const rgbaToHex = (rgba) => {
 describe('Тест на элементы с только левым бордером', () => {
   it('Должен проверить, что элементы имеют только левый бордер и других нет', () => {
     // Заходим на нужную страницу
-    cy.visit(targetUrl[1]);
+    cy.visit(targetUrl);
 
     const blueHex = '#007fff';
     const redHex = '#e32402';

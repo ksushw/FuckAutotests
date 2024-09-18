@@ -12,11 +12,9 @@ const rgbaToHex = (rgba) => {
 
 describe('Тест на фон кнопки с предложением', () => {
   it('Должен проверить, что фон кнопки с заданной ссылкой синий или красный', () => {
-    cy.visit(targetUrl[1]);
+    cy.visit(targetUrl);
     // Замените этот адрес на фактический
     const offer_link = '{offer_link}'; // Например, 'https://example.com'
-
-    cy.visit(targetUrl[1]);
 
     // Проверяем, что элемент с нужной ссылкой имеет синий или красный фон
     cy.get(`a[href="${offer_link}&place=button"]`).then(($link) => {
