@@ -40,13 +40,25 @@ describe('Тест на элементы с только левым бордер
         );
       })
       .each(($el) => {
-        // Проверяем цвет левого бордера на соответствие заданным цветам
-        const borderLeftColor = Cypress.$($el).css('border-left-color');
-        cy.wrap($el).should((el) => {
-          expect(borderLeftColor).to.satisfy((color) => {
-            return rgbaToHex(color) === blueHex || rgbaToHex(color) === redHex;
-          }, 'Цвет левого бордера должен быть #007FFF или #e11229');
+        cy.wrap($el).then(($el) => {
+          // Check the border-left-color
+          const borderLeftColor = Cypress.$($el).css('border-left-color');
+          const isCorrectColor =
+            rgbaToHex(borderLeftColor) === blueHex || rgbaToHex(borderLeftColor) === redHex;
+          expect(isCorrectColor, 'Цвет левого бордера должен быть #007FFF или #e11229').to.be.true;
+
+          // Check if the inner text is italic
+          const fontStyle = Cypress.$($el).css('font-style');
+          expect(fontStyle, 'Текст должен быть в курсиве').to.equal('italic');
         });
+
+        // Проверяем цвет левого бордера на соответствие заданным цветам
+        // const borderLeftColor = Cypress.$($el).css('border-left-color');
+        // cy.wrap($el).should((el) => {
+        //   expect(borderLeftColor).to.satisfy((color) => {
+        //     return rgbaToHex(color) === blueHex || rgbaToHex(color) === redHex;
+        //   }, 'Цвет левого бордера должен быть #007FFF или #e11229');
+        // });
       });
   });
 });
