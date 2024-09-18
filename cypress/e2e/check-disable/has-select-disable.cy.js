@@ -58,14 +58,20 @@ describe('Проверка наличия стилей CSS', () => {
               if ($el.css('pointer-events') === 'none') {
                 let wrapper = cy.wrap($el);
 
-                if (wrapper.should('have.css', 'user-select', 'none', {timeout: 1000}))
-                  styleFound = true;
-                if (wrapper.should('have.css', '-webkit-user-select', 'none', {timeout: 1000}))
-                  styleFound = true;
-                if (wrapper.should('have.css', '-ms-user-select', 'none', {timeout: 1000}))
-                  styleFound = true;
-                if (wrapper.should('have.css', '-moz-user-select', 'none', {timeout: 1000}))
-                  styleFound = true;
+                wrapper.then(($el) => {
+                  const stylesToCheck = [
+                    'user-select',
+                    '-webkit-user-select',
+                    '-ms-user-select',
+                    '-moz-user-select',
+                  ];
+
+                  stylesToCheck.forEach((style) => {
+                    if (Cypress.$($el).css(style) === 'none') {
+                      styleFound = true;
+                    }
+                  });
+                });
 
                 // if (
                 //   cy
