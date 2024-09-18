@@ -56,16 +56,24 @@ describe('Проверка наличия стилей CSS', () => {
             $elements.each((index, element) => {
               const $el = Cypress.$(element);
               if ($el.css('pointer-events') === 'none') {
-                if (
-                  cy
-                    .wrap($el)
-                    .should('have.css', 'user-select', 'none')
-                    .or('have.css', '-webkit-user-select', 'none')
-                    .or('have.css', '-ms-user-select', 'none')
-                    .or('have.css', '-moz-user-select', 'none')
-                ) {
-                  styleFound = true;
-                }
+                let wrapper = cy.wrap($el);
+
+                if (wrapper.should('have.css', 'user-select', 'none')) styleFound = true;
+                if (wrapper.should('have.css', '-webkit-user-select', 'none')) styleFound = true;
+                if (wrapper.should('have.css', '-ms-user-select', 'none')) styleFound = true;
+                if (wrapper.should('have.css', '-moz-user-select', 'none')) styleFound = true;
+
+                // if (
+                //   cy
+                //     .wrap($el)
+                //     // .should('have.css', 'pointer-events', 'none')
+                //     .should('have.css', 'user-select', 'none')
+                //     .or('have.css', '-webkit-user-select', 'none')
+                //     .or('have.css', '-ms-user-select', 'none')
+                //     .or('have.css', '-moz-user-select', 'none')
+                // ) {
+                //   styleFound = true;
+                // }
               }
             });
           }
