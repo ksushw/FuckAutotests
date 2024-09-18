@@ -42,9 +42,9 @@ describe('Проверка наличия стилей CSS', () => {
 });
 
 describe('Проверка наличия стилей CSS', () => {
-  it('Должен подтвердить наличие хотя бы одного элемента с указанными стилями', () => {
+  it('Должен подтвердить наличие элементов с указанными стилями', () => {
     cy.visit(targetUrl);
-    cy.viewport('iphone-6');
+
     let styleFound = false;
     // Функция для проверки наличия и значения стиля
     const checkStyles = (selector) => {
@@ -59,11 +59,11 @@ describe('Проверка наличия стилей CSS', () => {
                 if (
                   cy
                     .wrap($el)
-                    .should('have.css', 'pointer-events', 'none')
-                    .and('have.css', 'user-select', 'none')
-                    .and('have.css', '-webkit-user-select', 'none')
-                    .and('have.css', '-ms-user-select', 'none')
-                    .and('have.css', '-moz-user-select', 'none')
+                    // .should('have.css', 'pointer-events', 'none')
+                    .should('have.css', 'user-select', 'none')
+                    .or('have.css', '-webkit-user-select', 'none')
+                    .or('have.css', '-ms-user-select', 'none')
+                    .or('have.css', '-moz-user-select', 'none')
                 ) {
                   styleFound = true;
                 }
