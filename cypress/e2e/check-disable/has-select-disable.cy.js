@@ -59,7 +59,6 @@ describe('Проверка наличия стилей CSS', () => {
                 if (
                   cy
                     .wrap($el)
-                    // .should('have.css', 'pointer-events', 'none')
                     .should('have.css', 'user-select', 'none')
                     .or('have.css', '-webkit-user-select', 'none')
                     .or('have.css', '-ms-user-select', 'none')
