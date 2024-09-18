@@ -23,7 +23,7 @@ describe('Тест на фон кнопки с предложением', () => 
       const backgroundColorHex = rgbaToHex(backgroundColor); // Преобразуем в HEX
 
       // Определяем валидные HEX цвета
-      const validHexColors = ['#007fff', '#e32402']; // HEX значения для синего и красного
+      const validHexColors = ['#007fff', '#e11229']; // HEX значения для синего и красного
 
       // Проверяем, что цвет фона входит в диапазон допустимых значений
       expect(validHexColors).to.include(backgroundColorHex);
