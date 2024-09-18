@@ -47,7 +47,8 @@ describe('Тест на элементы с только левым бордер
             rgbaToHex(borderLeftColor) === blueHex || rgbaToHex(borderLeftColor) === redHex;
           expect(
             isCorrectColor,
-            `Цвет левого бордера должен быть #007FFF или #e11229 (текущий цвет ${borderLeftColor})`
+            `Цвет левого бордера должен быть #007FFF или #e11229 
+			(текущий цвет  ${rgbaToHex(borderLeftColor)})`
           ).to.be.true;
 
           // Check if the inner text is italic
