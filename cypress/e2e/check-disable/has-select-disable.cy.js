@@ -58,10 +58,14 @@ describe('Проверка наличия стилей CSS', () => {
               if ($el.css('pointer-events') === 'none') {
                 let wrapper = cy.wrap($el);
 
-                if (wrapper.should('have.css', 'user-select', 'none')) styleFound = true;
-                if (wrapper.should('have.css', '-webkit-user-select', 'none')) styleFound = true;
-                if (wrapper.should('have.css', '-ms-user-select', 'none')) styleFound = true;
-                if (wrapper.should('have.css', '-moz-user-select', 'none')) styleFound = true;
+                if (wrapper.should('have.css', 'user-select', 'none', {timeout: 1000}))
+                  styleFound = true;
+                if (wrapper.should('have.css', '-webkit-user-select', 'none', {timeout: 1000}))
+                  styleFound = true;
+                if (wrapper.should('have.css', '-ms-user-select', 'none', {timeout: 1000}))
+                  styleFound = true;
+                if (wrapper.should('have.css', '-moz-user-select', 'none', {timeout: 1000}))
+                  styleFound = true;
 
                 // if (
                 //   cy
