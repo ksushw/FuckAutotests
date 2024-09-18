@@ -2,7 +2,7 @@ const targetUrl = Cypress.env('targetUrl');
 
 describe('Проверка наличия хотя бы одного contenteditable="false"', () => {
   it('Должен подтвердить наличие contenteditable="false" хотя бы в одном варианте', () => {
-    cy.visit(targetUrl[4]);
+    cy.visit(targetUrl);
     let isContentEditableFound = false;
 
     // Функция для проверки наличия и значения атрибута contenteditable
@@ -35,7 +35,7 @@ describe('Проверка наличия хотя бы одного contentedit
 
 describe('Проверка наличия хотя бы одного contenteditable="false"', () => {
   it('Должен подтвердить наличие contenteditable="false" хотя бы в одном варианте', () => {
-    cy.visit(targetUrl[0]);
+    cy.visit(targetUrl);
 
     cy.viewport('iphone-6');
 

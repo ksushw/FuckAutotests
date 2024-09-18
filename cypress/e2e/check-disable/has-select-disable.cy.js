@@ -2,7 +2,7 @@ const targetUrl = Cypress.env('targetUrl');
 
 describe('Проверка наличия стилей CSS', () => {
   it('Должен подтвердить наличие хотя бы одного элемента с указанными стилями', () => {
-    cy.visit(targetUrl[0]);
+    cy.visit(targetUrl);
     let styleFound = false;
 
     const checkStyles = (selector) => {
@@ -43,7 +43,7 @@ describe('Проверка наличия стилей CSS', () => {
 
 describe('Проверка наличия стилей CSS', () => {
   it('Должен подтвердить наличие хотя бы одного элемента с указанными стилями', () => {
-    cy.visit(targetUrl[0]);
+    cy.visit(targetUrl);
     cy.viewport('iphone-6');
     let styleFound = false;
     // Функция для проверки наличия и значения стиля
