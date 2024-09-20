@@ -1,8 +1,8 @@
 // MOC LINKS
 const targetUrl = Cypress.env('targetUrl');
 
-describe('aside unclickable links', function () {
-  it('should be disabled', function () {
+describe('Все ссылки в блоке aside некликабельные', function () {
+  it('должен быть некликабельным', function () {
     cy.visit(targetUrl);
 
     cy.get('body').then(($body) => {
@@ -14,7 +14,9 @@ describe('aside unclickable links', function () {
               const asidePointerEvents = $aside.css('pointer-events');
               if (asidePointerEvents === 'none') {
                 // Если у всего aside pointer-events: none, тест проходит успешно
-                cy.log('Aside has pointer-events: none, all links are unclickable');
+                cy.log(
+                  'У всех ссылок в блоке aside - pointer-events: none, все ссылки некликабельные'
+                );
               } else {
                 // Проверяем каждую ссылку, чтобы убедиться, что у нее pointer-events: none
                 cy.wrap($aside)
@@ -22,15 +24,17 @@ describe('aside unclickable links', function () {
                   .each(($link) => {
                     cy.wrap($link).should('have.css', 'pointer-events', 'none');
                   });
-                cy.log('Aside links have pointer-events: none, all links are unclickable');
+                cy.log(
+                  'У всех ссылок в блоке aside - pointer-events: none, все ссылки некликабельные'
+                );
               }
             } else {
               // Если в aside нет ссылок, тест проходит успешно
-              cy.log('Aside has no links');
+              cy.log('Блок aside не имеет ссылок');
             }
           });
       } else {
-        cy.log('No aside elements found on the page');
+        cy.log('Элементы в блоке aside на странице не найдены');
       }
     });
   });

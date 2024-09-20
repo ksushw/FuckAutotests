@@ -1,8 +1,8 @@
 // MOC LINKS
 const targetUrl = Cypress.env('targetUrl');
 
-describe('footer unclickable footer links', function () {
-  it('should be disabled', function () {
+describe('Все ссылки в блоке footer некликабельные', function () {
+  it('должен быть некликабельным', function () {
     cy.visit(targetUrl);
 
     cy.get('footer').then(($footer) => {
@@ -11,7 +11,7 @@ describe('footer unclickable footer links', function () {
 
         if (footerPointerEvents === 'none') {
           // Если у всего footer pointer-events: none, тест проходит успешно
-          cy.log('footer has pointer-events: none, all links are unclickable');
+          cy.log('У всех ссылок в блоке footer - pointer-events: none, все ссылки некликабельные');
         } else {
           // Проверяем каждую ссылку, чтобы убедиться, что у нее pointer-events: none
           cy.wrap($footer)
@@ -19,11 +19,11 @@ describe('footer unclickable footer links', function () {
             .each(($link) => {
               cy.wrap($link).should('have.css', 'pointer-events', 'none');
             });
-          cy.log('Links has pointer-events: none, all links are unclickable');
+          cy.log('У всех ссылок в блоке footer - pointer-events: none, все ссылки некликабельные');
         }
       } else {
-        // Если в хедере нет ссылок, тест проходит успешно
-        cy.log('footer has no links');
+        // Если в футере нет ссылок, тест проходит успешно
+        cy.log('Блок footer не имеет ссылок');
       }
     });
   });

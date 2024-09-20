@@ -10,8 +10,8 @@ const rgbaToHex = (rgba) => {
   return `#${r}${g}${b}`;
 };
 
-describe('Тест на фон кнопки с предложением', () => {
-  it('Должен проверить, что фон кнопки с заданной ссылкой синий или красный', () => {
+describe('Кнопка "regiser now" с заданной ссылкой {offer_link}&place=button - нужного цвета ', () => {
+  it('Цвет кнопки "regiser now" с заданной ссылкой {offer_link}&place=button - должен быть синий(#007fff) или красный(#e11229)', () => {
     cy.visit(targetUrl);
     // Замените этот адрес на фактический
     const offer_link = '{offer_link}'; // Например, 'https://example.com'

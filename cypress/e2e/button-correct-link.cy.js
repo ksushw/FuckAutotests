@@ -1,7 +1,7 @@
 const targetUrl = Cypress.env('targetUrl');
 
-describe('header unclickable header links', function () {
-  it('should be disabled', function () {
+describe('Кнопка "regiser now" с заданной ссылкой {offer_link}&place=button', function () {
+  it('Кнопка "regiser now" должна иметь ссылку {offer_link}&place=button', function () {
     cy.visit(targetUrl);
 
     cy.get('a').then(($links) => {

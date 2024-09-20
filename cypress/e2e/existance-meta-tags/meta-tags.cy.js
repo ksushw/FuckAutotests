@@ -5,7 +5,7 @@ describe('meta tags', function () {
     // Посещаем страницу перед каждым тестом
     cy.visit(targetUrl);
   });
-  it('should contain fomat-detection tags', function () {
+  it('Должен содержать мета-теги fomat-detection=no', function () {
     const expectedAttributes = ['telephone=no', 'date=no', 'address=no', 'email=no'];
 
     cy.get('meta[name="format-detection"]').then((metaTags) => {
@@ -33,7 +33,7 @@ describe('meta tags', function () {
     });
   });
 
-  it('Должен содержать мета-тег charset="UTF-8" либо в content, либо как отдельный атрибут', () => {
+  it('Должен содержать мета-тег charset="UTF-8"', () => {
     // Проверяем наличие мета-тега с charset в content
     cy.get('head').then(($head) => {
       if ($head.find('meta[charset="UTF-8"]').length > 0) {
@@ -48,7 +48,7 @@ describe('meta tags', function () {
     });
   });
 
-  it('should contain viewport tag with content "width=device-width, initial-scale=1.0"', function () {
+  it('Должен содержать тег viewport с содержимым "width=device-width, initial-scale=1.0"', function () {
     cy.get('meta[name="viewport"]').should('exist');
     cy.get('meta[name="viewport"]')
       .should('have.attr', 'content')

@@ -1,8 +1,8 @@
 // MOC LINKS
 const targetUrl = Cypress.env('targetUrl');
 
-describe('header unclickable header links', function () {
-  it('should be disabled', function () {
+describe('Все ссылки в блоке header некликабельные', function () {
+  it('должен быть некликабельным', function () {
     cy.visit(targetUrl);
 
     cy.get('header').then(($header) => {
@@ -11,7 +11,7 @@ describe('header unclickable header links', function () {
 
         if (headerPointerEvents === 'none') {
           // Если у всего header pointer-events: none, тест проходит успешно
-          cy.log('Header has pointer-events: none, all links are unclickable');
+          cy.log('У всех ссылок в блоке header - pointer-events: none, все ссылки некликабельные');
         } else {
           // Проверяем каждую ссылку, чтобы убедиться, что у нее pointer-events: none
           cy.wrap($header)
@@ -19,11 +19,11 @@ describe('header unclickable header links', function () {
             .each(($link) => {
               cy.wrap($link).should('have.css', 'pointer-events', 'none');
             });
-          cy.log('Links has pointer-events: none, all links are unclickable');
+          cy.log('У всех ссылок в блоке header - pointer-events: none, все ссылки некликабельные');
         }
       } else {
         // Если в хедере нет ссылок, тест проходит успешно
-        cy.log('Header has no links');
+        cy.log('Блок header не имеет ссылок');
       }
     });
   });
