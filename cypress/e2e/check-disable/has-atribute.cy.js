@@ -1,7 +1,7 @@
 const targetUrl = Cypress.env('targetUrl');
 
 describe('Проверка наличия хотя бы одного contenteditable="false"', () => {
-  it('Должен подтвердить наличие contenteditable="false" хотя бы в одном варианте', () => {
+  it('Должен подтвердить наличие contenteditable="false"', () => {
     cy.visit(targetUrl);
     let isContentEditableFound = false;
 

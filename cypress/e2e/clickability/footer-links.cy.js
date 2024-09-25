@@ -2,7 +2,7 @@
 const targetUrl = Cypress.env('targetUrl');
 
 describe('Все ссылки в блоке footer некликабельные', function () {
-  it('должен быть некликабельным', function () {
+  it('Все ссылки в блоке footer должны быть некликабельными', function () {
     cy.visit(targetUrl);
 
     cy.get('footer').then(($footer) => {

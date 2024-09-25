@@ -2,7 +2,7 @@
 const targetUrl = Cypress.env('targetUrl');
 
 describe('Все ссылки в блоке header некликабельные', function () {
-  it('должен быть некликабельным', function () {
+  it('Все ссылки в блоке header должны быть некликабельными', function () {
     cy.visit(targetUrl);
 
     cy.get('header').then(($header) => {
