@@ -34,27 +34,3 @@ describe('Проверка наличия хотя бы одного contentedit
     });
   });
 });
-
-// describe('Проверка наличия хотя бы одного contenteditable="false"', () => {
-//   it('Должен подтвердить наличие contenteditable="false" хотя бы в одном варианте', () => {
-//     cy.visit(targetUrl);
-
-//     let isContentEditableFound = false;
-
-//     // Функция для проверки наличия и значения атрибута contenteditable
-//     const checkContentEditable = (selector) => {
-//       cy.get('body')
-//         .find(selector)
-//         .each(($el) => {
-//           const attr = $el.attr('contenteditable');
-//           if (attr === 'false') {
-//             isContentEditableFound = true;
-//           }
-//         });
-//     };
-
-//     cy.then(() => {
-//       expect(isContentEditableFound).to.be.true;
-//     });
-//   });
-// });
