@@ -1,40 +1,39 @@
-// MOC LINKS
 const targetUrl = Cypress.env('targetUrl');
 
 describe('Все ссылки в блоке aside некликабельные', function () {
-  it('Все ссылки в блоке aside должны быть некликабельными', function () {
+  it('Ссылки в блоке aside должны быть некликабельными', function () {
     cy.visit(targetUrl);
 
-    cy.get('body').then(($body) => {
-      if ($body.find('aside').length > 0) {
-        cy.wrap($body)
-          .find('aside')
-          .each(($aside) => {
-            if ($aside.find('a').length > 0 || Cypress.$($aside).is(':visible')) {
-              const asidePointerEvents = $aside.css('pointer-events');
-              if (asidePointerEvents === 'none') {
-                // Если у всего aside pointer-events: none, тест проходит успешно
-                cy.log(
-                  'У всех ссылок в блоке aside - pointer-events: none, все ссылки некликабельные'
-                );
-              } else {
-                // Проверяем каждую ссылку, чтобы убедиться, что у нее pointer-events: none
-                cy.wrap($aside)
-                  .find('a')
-                  .each(($link) => {
-                    cy.wrap($link).should('have.css', 'pointer-events', 'none');
-                  });
-                cy.log(
-                  'У всех ссылок в блоке aside - pointer-events: none, все ссылки некликабельные'
+    cy.get('aside').then(($aside) => {
+      // Проверяем, есть ли ссылки внутри aside
+      if ($aside.find('a').length > 0) {
+        const asidePointerEvents = $aside.css('pointer-events');
+
+        if (asidePointerEvents === 'none') {
+          // Если у всего aside pointer-events: none, тест проходит успешно
+          cy.log('Все ссылки в блоке aside некликабельные через pointer-events: none');
+        } else if ($aside.attr('inert')) {
+          // Если у aside есть атрибут inert
+          cy.log('Все ссылки в блоке aside некликабельные через атрибут inert');
+        } else {
+          // Проверяем каждую ссылку, чтобы убедиться, что у нее pointer-events: none или inert
+          cy.wrap($aside)
+            .find('a')
+            .each(($link) => {
+              const linkPointerEvents = $link.css('pointer-events');
+              if (linkPointerEvents !== 'none' && !$link.closest('[inert]').length) {
+                throw new Error(
+                  'Ссылка в блоке aside кликабельна и не имеет inert или pointer-events: none'
                 );
               }
-            } else {
-              // Если в aside нет ссылок, тест проходит успешно
-              cy.log('Блок aside не имеет ссылок');
-            }
-          });
+            });
+          cy.log(
+            'Все ссылки в блоке aside некликабельные через pointer-events: none или атрибут inert'
+          );
+        }
       } else {
-        cy.log('Элементы в блоке aside на странице не найдены');
+        // Если в aside нет ссылок, тест проходит успешно
+        cy.log('Блок aside не имеет ссылок');
       }
     });
   });

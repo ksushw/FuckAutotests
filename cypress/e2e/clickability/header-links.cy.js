@@ -1,25 +1,35 @@
-// MOC LINKS
 const targetUrl = Cypress.env('targetUrl');
 
 describe('Все ссылки в блоке header некликабельные', function () {
-  it('Все ссылки в блоке header должны быть некликабельными', function () {
+  it('Ссылки в блоке header должны быть некликабельными', function () {
     cy.visit(targetUrl);
 
     cy.get('header').then(($header) => {
+      // Проверяем, есть ли ссылки внутри header
       if ($header.find('a').length > 0) {
         const headerPointerEvents = $header.css('pointer-events');
 
         if (headerPointerEvents === 'none') {
           // Если у всего header pointer-events: none, тест проходит успешно
-          cy.log('У всех ссылок в блоке header - pointer-events: none, все ссылки некликабельные');
+          cy.log('Все ссылки в блоке header некликабельные через pointer-events: none');
+        } else if ($header.attr('inert')) {
+          // Если у header есть атрибут inert
+          cy.log('Все ссылки в блоке header некликабельные через атрибут inert');
         } else {
-          // Проверяем каждую ссылку, чтобы убедиться, что у нее pointer-events: none
+          // Проверяем каждую ссылку, чтобы убедиться, что у нее pointer-events: none или inert
           cy.wrap($header)
             .find('a')
             .each(($link) => {
-              cy.wrap($link).should('have.css', 'pointer-events', 'none');
+              const linkPointerEvents = $link.css('pointer-events');
+              if (linkPointerEvents !== 'none' && !$link.closest('[inert]').length) {
+                throw new Error(
+                  'Ссылка в блоке header кликабельна и не имеет inert или pointer-events: none'
+                );
+              }
             });
-          cy.log('У всех ссылок в блоке header - pointer-events: none, все ссылки некликабельные');
+          cy.log(
+            'Все ссылки в блоке header некликабельные через pointer-events: none или атрибут inert'
+          );
         }
       } else {
         // Если в хедере нет ссылок, тест проходит успешно
