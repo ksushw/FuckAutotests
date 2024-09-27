@@ -1,8 +1,7 @@
 const targetUrl = Cypress.env('targetUrl');
 
-// Функция для преобразования RGBA в HEX
 const rgbaToHex = (rgba) => {
-  const rgbaValues = rgba.match(/\d+/g); // Извлекаем числовые значения RGBA
+  const rgbaValues = rgba.match(/\d+/g);
   const r = parseInt(rgbaValues[0]).toString(16).padStart(2, '0');
   const g = parseInt(rgbaValues[1]).toString(16).padStart(2, '0');
   const b = parseInt(rgbaValues[2]).toString(16).padStart(2, '0');

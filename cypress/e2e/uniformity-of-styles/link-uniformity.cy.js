@@ -24,7 +24,7 @@ describe('Проверка стилей ссылок', () => {
     // Проверка всех ссылок, которые находятся внутри тегов <p>
     cy.get('p a').each(($link) => {
       cy.wrap($link).then(($el) => {
-        let defaultColor = $el.css('color'); // Цвет по умолчанию
+        let defaultColor = $el.css('color');
 
         // Если цвет в формате rgba, преобразуем его в hex
         if (defaultColor.startsWith('rgb')) {
@@ -43,7 +43,7 @@ describe('Проверка стилей ссылок', () => {
         cy.wrap($el)
           .trigger('mouseover')
           .then(() => {
-            let hoverColor = $el.css('color'); // Цвет при наведении
+            let hoverColor = $el.css('color');
 
             // Если цвет в формате rgba, преобразуем его в hex
             if (hoverColor.startsWith('rgb')) {

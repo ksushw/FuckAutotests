@@ -2,7 +2,6 @@ const targetUrl = Cypress.env('targetUrl');
 
 describe('meta tags', function () {
   beforeEach(() => {
-    // Посещаем страницу перед каждым тестом
     cy.visit(targetUrl);
   });
   it('Должен содержать мета-теги fomat-detection=no', function () {
