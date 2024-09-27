@@ -1,7 +1,7 @@
 const targetUrl = Cypress.env('targetUrl');
 
-describe('Все ссылки в блоке aside некликабельные', function () {
-  it('Ссылки в блоке aside должны быть некликабельными', function () {
+describe('Все ссылки в блоке <aside> некликабельные', function () {
+  it('Ссылки в блоке <aside> должны быть некликабельными', function () {
     cy.visit(targetUrl);
 
     cy.get('aside').then(($aside) => {
