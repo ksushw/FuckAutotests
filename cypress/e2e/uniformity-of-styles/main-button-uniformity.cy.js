@@ -2,7 +2,7 @@ const targetUrl = Cypress.env('targetUrl');
 
 // Функция для преобразования RGBА в HEX
 const rgbaToHex = (rgba) => {
-  // Извлекаем числовые значения RGBA из строки
+  // Извлекаем числовые значения RGBA из строки, проверяя наличие 'rgba()'
   const rgbaValues = rgba.match(/[\d.]+/g); // Извлекаем все числовые значения
   const r = Math.round(rgbaValues[0]).toString(16).padStart(2, '0');
   const g = Math.round(rgbaValues[1]).toString(16).padStart(2, '0');
@@ -10,25 +10,23 @@ const rgbaToHex = (rgba) => {
   return `#${r}${g}${b}`;
 };
 
-describe('Проверка стилей ссылок', () => {
-  it('Ссылки должны быть синими (#007fff) или красными (#e11229)', () => {
+describe('Кнопка "regiser now" с заданной ссылкой {offer_link}&place=button - нужного цвета ', () => {
+  it('Цвет кнопки "regiser now" с заданной ссылкой {offer_link}&place=button - должен быть синий(#007fff) или красный(#e11229)', () => {
     cy.visit(targetUrl);
+    // Замените этот адрес на фактический
+    const offer_link = '{offer_link}'; // Например, 'https://example.com'
 
-    // Определяем валидные HEX цвета
-    const validHexColors = ['#007fff', '#e11229'];
+    // Проверяем, что элемент с нужной ссылкой имеет синий или красный фон
+    cy.get(`a[href="${offer_link}&place=button"]`).then(($link) => {
+      // Получаем фоновый цвет в формате RGBA
+      const backgroundColor = $link.css('background-color');
+      const backgroundColorHex = rgbaToHex(backgroundColor); // Преобразуем в HEX
 
-    // Проверка всех ссылок, которые находятся внутри тегов <p>
-    cy.get('p a').each(($link) => {
-      // Получаем цвет ссылки
-      cy.wrap($link).then(($el) => {
-        const color = $el.css('color');
+      // Определяем валидные HEX цвета
+      const validHexColors = ['#007fff', '#e11229']; // HEX значения для синего и красного
 
-        // Преобразуем цвет из RGBA в HEX
-        const colorHex = rgbaToHex(color);
-
-        // Проверяем, что цвет ссылки соответствует допустимым значениям
-        expect(validHexColors).to.include(colorHex);
-      });
+      // Проверяем, что цвет фона входит в диапазон допустимых значений
+      expect(validHexColors).to.include(backgroundColorHex);
     });
   });
 });
