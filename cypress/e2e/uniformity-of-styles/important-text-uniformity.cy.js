@@ -33,31 +33,23 @@ describe('Проверка элементов с левым бордером', (
           element.innerText.trim() !== ''
         );
       })
-      .then((filteredElements) => {
-        if (filteredElements.length === 0) {
-          // Если элементов нет, тест пройден
-          cy.log('Элементы с левым бордером отсутствуют.');
-          return;
-        }
+      .should('have.length.greaterThan', 0) // Проверяем, что найдено больше 0 элементов
+      .each(($el) => {
+        cy.wrap($el).then(($el) => {
+          // Проверяем цвет левого бордера
+          const borderLeftColor = Cypress.$($el).css('border-left-color');
+          const isCorrectColor = [blueHex, redHex].includes(rgbaToHex(borderLeftColor));
 
-        // Если элементы есть, проверяем их дальше
-        cy.wrap(filteredElements).each(($el) => {
-          cy.wrap($el).then(($el) => {
-            // Проверяем цвет левого бордера
-            const borderLeftColor = Cypress.$($el).css('border-left-color');
-            const isCorrectColor = [blueHex, redHex].includes(rgbaToHex(borderLeftColor));
+          expect(
+            isCorrectColor,
+            `Цвет левого бордера должен быть ${blueHex} или ${redHex}, а не ${rgbaToHex(
+              borderLeftColor
+            )}`
+          ).to.be.true;
 
-            expect(
-              isCorrectColor,
-              `Цвет левого бордера должен быть ${blueHex} или ${redHex}, а не ${rgbaToHex(
-                borderLeftColor
-              )}`
-            ).to.be.true;
-
-            // Проверяем, что текст в элементе написан курсивом
-            const fontStyle = Cypress.$($el).css('font-style');
-            expect(fontStyle).to.equal('italic');
-          });
+          // Проверяем, что текст в элементе написан курсивом
+          const fontStyle = Cypress.$($el).css('font-style');
+          expect(fontStyle).to.equal('italic');
         });
       });
   });
