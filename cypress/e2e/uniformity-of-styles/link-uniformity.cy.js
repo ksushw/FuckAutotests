@@ -22,7 +22,7 @@ describe('Проверка стилей ссылок', () => {
       cy.wrap($link).then(($el) => {
         // Получаем цвет ссылки
         const defaultColor = $el.css('color');
-        const colorHex = rgbaToHex(defaultColor); // Преобразуем в HEX
+        const colorHex = rgbaToHex(defaultColor);
 
         // Проверяем, что цвет корректен (синий или красный)
         expect(
@@ -35,7 +35,7 @@ describe('Проверка стилей ссылок', () => {
           .trigger('mouseover')
           .then(() => {
             const hoverColor = $el.css('color');
-            const hoverColorHex = rgbaToHex(hoverColor); // Преобразуем цвет при наведении в HEX
+            const hoverColorHex = rgbaToHex(hoverColor);
 
             // Проверяем, что цвет при наведении корректен (синий или красный)
             expect(
