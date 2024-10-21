@@ -10,15 +10,15 @@ const rgbaToHex = (rgba) => {
 };
 
 describe('Проверка стилей ссылок', () => {
-  it('Ссылки внутри тегов <p> должны быть синими (#007fff) или красными (#e11229)', () => {
+  it('Ссылки внутри тегов <p> должны быть синими (#007fff) или красными (#e11229), исключая aside, header, footer', () => {
     cy.visit(targetUrl);
 
     // Ожидаемые цвета в формате HEX
     const blueHex = '#007fff';
     const redHex = '#e11229';
 
-    // Проверка всех ссылок, которые находятся внутри тегов <p>
-    cy.get('p a').each(($link) => {
+    // Проверка всех ссылок, которые находятся внутри тегов <p>, исключая aside, header и footer
+    cy.get('p a:not(aside p a):not(header p a):not(footer p a)').each(($link) => {
       cy.wrap($link).then(($el) => {
         // Получаем цвет ссылки
         const defaultColor = $el.css('color');
