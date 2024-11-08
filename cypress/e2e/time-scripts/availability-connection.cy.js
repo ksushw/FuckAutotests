@@ -4,9 +4,10 @@ describe('Проверка подключения time-scripts', () => {
   it('В HTML-разметке должен присутствовать тег <script> с подключением time-scripts', () => {
     cy.visit(targetUrl);
 
-    cy.get('script[src="./time-scripts/main.js"]').then((script) => {
+    cy.document().then((doc) => {
+      const scriptExists = doc.querySelector('script[src="./time-scripts/main.js"]') !== null;
       expect(
-        script.length > 0,
+        scriptExists,
         'Отсутствует подключение скрипта time-scripts. Путь должен быть указан как "<script type="module" src="./time-scripts/main.js"></script>".'
       ).to.be.true;
     });
@@ -16,10 +17,10 @@ describe('Проверка подключения time-scripts', () => {
     cy.visit(targetUrl);
 
     cy.get('[data-time-function]').should(($elements) => {
-      expect($elements.length).to.be.at.least(
-        2,
+      expect(
+        $elements.length,
         'В HTML-разметке отсутствует достаточное количество атрибутов data-time-function.'
-      );
+      ).to.be.at.least(2);
     });
   });
 });
