@@ -8,7 +8,7 @@ describe('Проверка подключения time-scripts', () => {
       const scriptExists = doc.querySelector('script[src="./time-scripts/main.js"]') !== null;
       expect(
         scriptExists,
-        'Отсутствует подключение скрипта time-scripts. Путь должен быть указан как `<script type="module" src="./time-scripts/main.js"></script>`.'
+        'Отсутствует подключение скрипта time-scripts. Путь должен быть указан как (<script type="module" src="./time-scripts/main.js"></script>).'
       ).to.be.true;
     });
   });
