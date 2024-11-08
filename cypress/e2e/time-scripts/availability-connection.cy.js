@@ -8,7 +8,7 @@ describe('Проверка подключения time-scripts', () => {
       const scriptExists = doc.querySelector('script[src="./time-scripts/main.js"]') !== null;
       expect(
         scriptExists,
-        'Отсутствует подключение скрипта time-scripts. Путь должен быть указан как "<script type="module" src="./time-scripts/main.js"></script>".'
+        'Отсутствует подключение скрипта time-scripts. Путь должен быть указан как `<script type="module" src="./time-scripts/main.js"></script>`.'
       ).to.be.true;
     });
   });
@@ -19,7 +19,7 @@ describe('Проверка подключения time-scripts', () => {
     cy.get('[data-time-function]').should(($elements) => {
       expect(
         $elements.length,
-        'В HTML-разметке отсутствует достаточное количество атрибутов data-time-function.'
+        'В HTML-разметке отсутствуют атрибуты data-time-function.'
       ).to.be.at.least(2);
     });
   });
