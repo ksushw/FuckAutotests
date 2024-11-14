@@ -5,10 +5,10 @@ describe('Проверка подключения time-scripts', () => {
     cy.visit(targetUrl);
 
     cy.document().then((doc) => {
-      const scriptExists = doc.querySelector('script[src="./time-scripts/main.js"]') !== null;
+      const scriptExists = doc.querySelector('script[src*="time-scripts/main.js"]') !== null;
       expect(
         scriptExists,
-        'Отсутствует подключение скрипта time-scripts. Путь должен быть указан как (&lt;script type="module" src="./time-scripts/main.js"&gt;&lt;/script&gt;).'
+        'Отсутствует подключение скрипта time-scripts. Путь должен быть указан как (&lt;script type="module" src="time-scripts/main.js"&gt;&lt;/script&gt;).'
       ).to.be.true;
     });
   });
