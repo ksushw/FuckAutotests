@@ -20,6 +20,9 @@ describe('Проверка стилей ссылок', () => {
     // Проверка всех ссылок, которые находятся внутри тегов <p>, исключая aside, header и footer
     cy.get('p a:not(aside p a):not(header p a):not(footer p a)').each(($link) => {
       cy.wrap($link).then(($el) => {
+        // Прокручиваем элемент в видимую область
+        cy.wrap($el).scrollIntoView();
+
         // Получаем цвет ссылки
         const defaultColor = $el.css('color');
         const colorHex = rgbaToHex(defaultColor);
@@ -30,21 +33,21 @@ describe('Проверка стилей ссылок', () => {
           `Цвет ссылки должен быть ${blueHex} или ${redHex}, а не ${colorHex}`
         ).to.be.true;
 
-        // Эмулируем наведение курсора
+        // Выполняем наведение курсора принудительно
         cy.wrap($el)
-          .trigger('mouseover')
+          .trigger('mouseover', {force: true})
           .then(() => {
             const hoverColor = $el.css('color');
             const hoverColorHex = rgbaToHex(hoverColor);
 
-            // Проверяем, что цвет при наведении корректен (синий или красный)
+            // Проверяем цвет при наведении
             expect(
               [blueHex, redHex].includes(hoverColorHex),
               `Цвет ссылки при наведении должен быть ${blueHex} или ${redHex}, а не ${hoverColorHex}`
             ).to.be.true;
 
             // Возвращаем ссылку в исходное состояние
-            cy.wrap($el).trigger('mouseout');
+            cy.wrap($el).trigger('mouseout', {force: true});
           });
       });
     });

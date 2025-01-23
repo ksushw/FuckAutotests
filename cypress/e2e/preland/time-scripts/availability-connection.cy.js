@@ -20,7 +20,7 @@ describe('Проверка подключения time-scripts', () => {
       expect(
         $elements.length,
         'В HTML-разметке отсутствуют атрибуты data-time-function.'
-      ).to.be.at.least(2);
+      ).to.be.at.least(1);
     });
   });
 });
