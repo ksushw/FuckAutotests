@@ -6,10 +6,10 @@ describe('Проверка наличия плейсхолдера {{form}} в H
 
     cy.document().then((doc) => {
       const htmlContent = doc.documentElement.outerHTML;
-      expect(htmlContent).to.include(
-        '{{form}}',
-        'Плейсхолдер {{form}} отсутствует в HTML-разметке'
-      );
+
+      if (!htmlContent.includes('{{form}}')) {
+        throw new Error('Плейсхолдер {{form}} отсутствует в HTML-разметке');
+      }
     });
   });
 });
