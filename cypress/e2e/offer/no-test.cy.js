@@ -1,7 +1,7 @@
 const targetUrl = Cypress.env('targetUrl');
 
 describe('Пропуск строки с комментарием <!-- skip test -->', () => {
-  it('Исключая строку с комментарием <!-- skip test -->', () => {
+  it('(Новое) Добавь комментарий <!-- skip test --> к строке, чтобы автотесты игнорировали эту строку.', () => {
     cy.visit(targetUrl);
 
     cy.get('html').then(($html) => {
