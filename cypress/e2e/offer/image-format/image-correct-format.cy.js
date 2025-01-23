@@ -4,8 +4,8 @@ describe('Проверка форматов изображений', function ()
   it('На странице не должно быть изображений в форматах .jpg, .png, .jpeg, конвертируй в .webp', function () {
     cy.visit(targetUrl);
 
-    // Проверяем теги <img>, если они есть
-    cy.get('img').then(($imgs) => {
+    // Проверяем <img>, если они есть
+    cy.get('img', {timeout: 0}).then(($imgs) => {
       if ($imgs.length > 0) {
         cy.wrap($imgs).each(($img) => {
           const src = $img.attr('src');
@@ -20,8 +20,8 @@ describe('Проверка форматов изображений', function ()
       }
     });
 
-    // Проверяем теги <source>, если они есть
-    cy.get('source').then(($sources) => {
+    // Проверяем <source>, если они есть
+    cy.get('source', {timeout: 0}).then(($sources) => {
       if ($sources.length > 0) {
         cy.wrap($sources).each(($source) => {
           const srcset = $source.attr('srcset');
