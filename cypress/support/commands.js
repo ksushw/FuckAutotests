@@ -25,7 +25,29 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 Cypress.on('uncaught:exception', (err, runnable) => {
-    // returning false here prevents Cypress from
-    // failing the test
-    return false
-  })
+  // returning false here prevents Cypress from
+  // failing the test
+  return false;
+});
+
+Cypress.Commands.add('removeSkippedElements', () => {
+  cy.document().then((doc) => {
+    const elementsToRemove = [];
+
+    // Проходим по всем узлам документа
+    doc.querySelectorAll('*').forEach((element) => {
+      const previousSibling = element.previousSibling;
+      if (
+        previousSibling &&
+        previousSibling.nodeType === Node.COMMENT_NODE &&
+        previousSibling.nodeValue.trim() === 'skip test'
+      ) {
+        // Если перед элементом есть комментарий <!-- skip test -->, добавляем в список для удаления
+        elementsToRemove.push(element);
+      }
+    });
+
+    // Удаляем все элементы, помеченные для пропуска
+    elementsToRemove.forEach((el) => el.parentNode.removeChild(el));
+  });
+});
