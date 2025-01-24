@@ -1,10 +1,10 @@
 const targetUrl = Cypress.env('targetUrl');
 
-describe('Проверка ссылок с якорем #form', function () {
-  it('Все ссылки должны содержать href="#form", кроме тех, что имеют target="_blank",', function () {
+describe('Проверка ссылок с якорем #form в <body>', function () {
+  it('Все ссылки в <body> должны содержать href="#form", кроме тех, что имеют target="_blank"', function () {
     cy.visit(targetUrl);
 
-    cy.get('a').each(($link) => {
+    cy.get('body a').each(($link) => {
       const href = $link.attr('href');
       const target = $link.attr('target');
 
