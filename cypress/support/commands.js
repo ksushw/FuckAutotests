@@ -49,5 +49,8 @@ Cypress.Commands.add('removeSkippedElements', () => {
 
     // Удаляем все элементы, помеченные для пропуска
     elementsToRemove.forEach((el) => el.parentNode.removeChild(el));
+
+    // Обязательно дожидаемся завершения операции
+    return cy.wrap(null);
   });
 });
