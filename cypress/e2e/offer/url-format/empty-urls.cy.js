@@ -20,74 +20,59 @@ describe('Проверка отсутствия пустых url("") в файл
   it('CSS-файлы не должны содержать пустых url("")', function () {
     cy.visit(targetUrl);
 
-    cy.get('link[rel="stylesheet"]').then(($links) => {
-      if (!$links.length) return;
+    cy.document().then((doc) => {
+      const linkElements = Array.from(doc.querySelectorAll('link[rel="stylesheet"]'));
+      if (!linkElements.length) return;
 
-      const checkPromises = [];
-
-      $links.each((_, link) => {
+      const requests = linkElements.map((link) => {
         const href = link.getAttribute('href');
-        if (href) {
-          const promise = cy
-            .request({
-              url: href,
-              failOnStatusCode: false,
-            })
-            .then((response) => {
-              if (response.status === 200 && typeof response.body === 'string') {
-                if (containsEmptyUrl(response.body)) {
-                  throw new Error(`В CSS-файле ${href} найдены пустые url("").`);
-                }
-              }
-            });
+        if (!href) return;
 
-          checkPromises.push(promise);
-        }
+        return cy.request({url: href, failOnStatusCode: false}).then((response) => {
+          if (response.status === 200 && typeof response.body === 'string') {
+            if (containsEmptyUrl(response.body)) {
+              throw new Error(`В CSS-файле ${href} найдены пустые url("").`);
+            }
+          }
+        });
       });
 
-      return Cypress.Promise.all(checkPromises);
+      return Cypress.Promise.all(requests);
     });
   });
 
   it('JS-файлы не должны содержать пустых url("")', function () {
     cy.visit(targetUrl);
 
-    cy.get('script[src]').then(($scripts) => {
-      if (!$scripts.length) return;
+    cy.document().then((doc) => {
+      const scriptElements = Array.from(doc.querySelectorAll('script[src]'));
+      if (!scriptElements.length) return;
 
-      const checkPromises = [];
-
-      $scripts.each((_, script) => {
+      const requests = scriptElements.map((script) => {
         const src = script.getAttribute('src');
-        if (src) {
-          const promise = cy
-            .request({
-              url: src,
-              failOnStatusCode: false,
-            })
-            .then((response) => {
-              if (response.status === 200 && typeof response.body === 'string') {
-                if (containsEmptyUrl(response.body)) {
-                  throw new Error(`В JS-файле ${src} найдены пустые url("").`);
-                }
-              }
-            });
+        if (!src) return;
 
-          checkPromises.push(promise);
-        }
+        return cy.request({url: src, failOnStatusCode: false}).then((response) => {
+          if (response.status === 200 && typeof response.body === 'string') {
+            if (containsEmptyUrl(response.body)) {
+              throw new Error(`В JS-файле ${src} найдены пустые url("").`);
+            }
+          }
+        });
       });
 
-      return Cypress.Promise.all(checkPromises);
+      return Cypress.Promise.all(requests);
     });
   });
 
   it('Встроенные стили не должны содержать пустых url("")', function () {
     cy.visit(targetUrl);
 
-    cy.get('style', {timeout: 0}).then(($styles) => {
-      if (!$styles.length) return;
+    cy.document().then((doc) => {
+      const styleElements = Array.from(doc.querySelectorAll('style'));
+      if (!styleElements.length) return;
 
-      $styles.each((_, styleEl) => {
+      styleElements.forEach((styleEl) => {
         const content = styleEl.textContent || '';
         if (containsEmptyUrl(content)) {
           throw new Error('Во встроенных стилях найдены пустые url("").');
@@ -99,10 +84,11 @@ describe('Проверка отсутствия пустых url("") в файл
   it('Инлайн-стили не должны содержать пустых url("")', function () {
     cy.visit(targetUrl);
 
-    cy.get('[style]', {timeout: 0}).then(($elements) => {
-      if (!$elements.length) return;
+    cy.document().then((doc) => {
+      const inlineStyledElements = Array.from(doc.querySelectorAll('[style]'));
+      if (!inlineStyledElements.length) return;
 
-      $elements.each((_, el) => {
+      inlineStyledElements.forEach((el) => {
         const styleAttr = el.getAttribute('style') || '';
         if (containsEmptyUrl(styleAttr)) {
           throw new Error('В инлайн-стилях найдены пустые url("").');
