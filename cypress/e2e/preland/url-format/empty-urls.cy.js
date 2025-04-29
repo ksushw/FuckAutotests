@@ -11,7 +11,6 @@ describe('Проверка отсутствия пустых url("") в файл
 
     cy.document().then((doc) => {
       const htmlContent = doc.documentElement.outerHTML;
-
       if (containsEmptyUrl(htmlContent)) {
         throw new Error('В HTML найдены пустые url("").');
       }
@@ -21,68 +20,94 @@ describe('Проверка отсутствия пустых url("") в файл
   it('CSS-файлы не должны содержать пустых url("")', function () {
     cy.visit(targetUrl);
 
-    cy.get('link[rel="stylesheet"]').each(($link) => {
-      const href = $link.attr('href');
-      if (href) {
-        cy.request({
-          url: href,
-          failOnStatusCode: false,
-        }).then((response) => {
-          if (response.status === 200) {
-            const cssContent = response.body;
-            if (typeof cssContent === 'string' && containsEmptyUrl(cssContent)) {
-              throw new Error(`В CSS-файле ${href} найдены пустые url("").`);
-            }
-          } else {
-            cy.log(`Не удалось получить доступ к CSS-файлу ${href}, статус: ${response.status}`);
-          }
-        });
-      }
+    cy.get('link[rel="stylesheet"]').then(($links) => {
+      if (!$links.length) return;
+
+      const checkPromises = [];
+
+      $links.each((_, link) => {
+        const href = link.getAttribute('href');
+        if (href) {
+          const promise = cy
+            .request({
+              url: href,
+              failOnStatusCode: false,
+            })
+            .then((response) => {
+              if (response.status === 200 && typeof response.body === 'string') {
+                if (containsEmptyUrl(response.body)) {
+                  throw new Error(`В CSS-файле ${href} найдены пустые url("").`);
+                }
+              }
+            });
+
+          checkPromises.push(promise);
+        }
+      });
+
+      return Cypress.Promise.all(checkPromises);
     });
   });
 
   it('JS-файлы не должны содержать пустых url("")', function () {
     cy.visit(targetUrl);
 
-    cy.get('script[src]').each(($script) => {
-      const src = $script.attr('src');
-      if (src) {
-        cy.request({
-          url: src,
-          failOnStatusCode: false,
-        }).then((response) => {
-          if (response.status === 200) {
-            const jsContent = response.body;
-            if (typeof jsContent === 'string' && containsEmptyUrl(jsContent)) {
-              throw new Error(`В JS-файле ${src} найдены пустые url("").`);
-            }
-          } else {
-            cy.log(`Не удалось получить доступ к JS-файлу ${src}, статус: ${response.status}`);
-          }
-        });
-      }
+    cy.get('script[src]').then(($scripts) => {
+      if (!$scripts.length) return;
+
+      const checkPromises = [];
+
+      $scripts.each((_, script) => {
+        const src = script.getAttribute('src');
+        if (src) {
+          const promise = cy
+            .request({
+              url: src,
+              failOnStatusCode: false,
+            })
+            .then((response) => {
+              if (response.status === 200 && typeof response.body === 'string') {
+                if (containsEmptyUrl(response.body)) {
+                  throw new Error(`В JS-файле ${src} найдены пустые url("").`);
+                }
+              }
+            });
+
+          checkPromises.push(promise);
+        }
+      });
+
+      return Cypress.Promise.all(checkPromises);
     });
   });
 
   it('Встроенные стили не должны содержать пустых url("")', function () {
     cy.visit(targetUrl);
 
-    cy.get('style').each(($style) => {
-      const styleContent = $style.text();
-      if (containsEmptyUrl(styleContent)) {
-        throw new Error('Во встроенных стилях найдены пустые url("").');
-      }
+    cy.get('style', {timeout: 0}).then(($styles) => {
+      if (!$styles.length) return;
+
+      $styles.each((_, styleEl) => {
+        const content = styleEl.textContent || '';
+        if (containsEmptyUrl(content)) {
+          throw new Error('Во встроенных стилях найдены пустые url("").');
+        }
+      });
     });
   });
 
   it('Инлайн-стили не должны содержать пустых url("")', function () {
     cy.visit(targetUrl);
 
-    cy.get('[style]').each(($el) => {
-      const styleAttr = $el.attr('style');
-      if (styleAttr && containsEmptyUrl(styleAttr)) {
-        throw new Error('В инлайн-стилях найдены пустые url("").');
-      }
+    cy.get('[style]', {timeout: 0}).then(($elements) => {
+      if (!$elements.length) return;
+
+      $elements.each((_, el) => {
+        const styleAttr = el.getAttribute('style') || '';
+        if (containsEmptyUrl(styleAttr)) {
+          throw new Error('В инлайн-стилях найдены пустые url("").');
+        }
+      });
     });
   });
 });
