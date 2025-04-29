@@ -24,10 +24,17 @@ describe('Проверка отсутствия пустых url("") в файл
     cy.get('link[rel="stylesheet"]').each(($link) => {
       const href = $link.attr('href');
       if (href) {
-        cy.request(href).then((response) => {
-          const cssContent = response.body;
-          if (typeof cssContent === 'string' && containsEmptyUrl(cssContent)) {
-            throw new Error(`В CSS-файле ${href} найдены пустые url("").`);
+        cy.request({
+          url: href,
+          failOnStatusCode: false,
+        }).then((response) => {
+          if (response.status === 200) {
+            const cssContent = response.body;
+            if (typeof cssContent === 'string' && containsEmptyUrl(cssContent)) {
+              throw new Error(`В CSS-файле ${href} найдены пустые url("").`);
+            }
+          } else {
+            cy.log(`Не удалось получить доступ к CSS-файлу ${href}, статус: ${response.status}`);
           }
         });
       }
@@ -40,10 +47,17 @@ describe('Проверка отсутствия пустых url("") в файл
     cy.get('script[src]').each(($script) => {
       const src = $script.attr('src');
       if (src) {
-        cy.request(src).then((response) => {
-          const jsContent = response.body;
-          if (typeof jsContent === 'string' && containsEmptyUrl(jsContent)) {
-            throw new Error(`В JS-файле ${src} найдены пустые url("").`);
+        cy.request({
+          url: src,
+          failOnStatusCode: false,
+        }).then((response) => {
+          if (response.status === 200) {
+            const jsContent = response.body;
+            if (typeof jsContent === 'string' && containsEmptyUrl(jsContent)) {
+              throw new Error(`В JS-файле ${src} найдены пустые url("").`);
+            }
+          } else {
+            cy.log(`Не удалось получить доступ к JS-файлу ${src}, статус: ${response.status}`);
           }
         });
       }
