@@ -1,9 +1,12 @@
 {
-  "tag-pair": true,  // Проверяет, что все открывающие теги имеют закрывающие теги (например, <div>...</div>).
-  "src-not-empty": true, // Проверяет, чтобы атрибуты src (например, в <img> и <script>) не были пустыми, что предотвращает ошибки загрузки ресурсов.
-  "attr-no-duplication": true, // Запрещает дублирование одного и того же атрибута в одном теге (например, два раза указанный class="").
-  "img-alt-require": true, // Требует наличие атрибута alt у <img> для обеспечения доступности и корректной работы SEO (особенно для людей с ограниченными возможностями).
-  "spec-char-escape": false, // Отключаем проверку экранирования спецсимволов, чтобы PHP-код не вызывал ошибки
-  "attr-value-double-quotes": false // Отключаем проверку кавычек в значений атрибутов
+  "tag-pair": true,
+  "src-not-empty": true,
+  "attr-no-duplication": true,
+  "img-alt-require": true,
+  "spec-char-escape": false,
+  "attr-value-double-quotes": false,
+  "tag-self-close": {
+    "selfclosing": "xml",
+    "except": ["source"]
   }
-
+}

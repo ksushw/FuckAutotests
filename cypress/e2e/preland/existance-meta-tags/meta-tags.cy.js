@@ -33,7 +33,6 @@ describe('meta tags', function () {
   });
 
   it('Должен содержать мета-тег charset="UTF-8"', () => {
-    // Проверяем наличие мета-тега с charset в content
     cy.get('head').then(($head) => {
       if ($head.find('meta[charset="UTF-8"]').length > 0) {
         cy.get('meta[charset="UTF-8"]').should('exist');
