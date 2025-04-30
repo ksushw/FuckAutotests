@@ -1,6 +1,6 @@
 const targetUrl = Cypress.env('targetUrl');
 
-describe('Проверка отсутствия некорректных ссылок в тегах link', function () {
+describe('Проверка отсутствия некорректных ссылок в тегах <link>', function () {
   it('Теги link не должны содержать href="{{link}}"', function () {
     cy.visit(targetUrl);
 
