@@ -1,7 +1,7 @@
 const targetUrl = Cypress.env('targetUrl');
 
 describe('Проверка корректности плейсхолдеров в HTML-разметке', function () {
-  it('На странице должен быть плейсхолдер {{aio.visit.fields.offer_name.for_visitor}}', function () {
+  it('На странице должен быть плейсхолдер {{aio.visit.fields.offer_name.for_visitor}} и отсутствовать устаревший {offer_name}', function () {
     cy.visit(targetUrl);
 
     cy.document().then((doc) => {
@@ -15,7 +15,7 @@ describe('Проверка корректности плейсхолдеров �
 
       if (htmlContent.includes(incorrectPlaceholder)) {
         throw new Error(
-          `В HTML-разметке найден некорректный плейсхолдер ${incorrectPlaceholder}. ` +
+          `В HTML-разметке найден устаревший плейсхолдер ${incorrectPlaceholder}. ` +
             `Используйте корректный формат: ${correctPlaceholder}`
         );
       }
